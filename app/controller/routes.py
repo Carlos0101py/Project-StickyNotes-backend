@@ -128,11 +128,6 @@ def delete_note():
         id_note = body['id']
         note = Note.query.filter_by(id=id_note).first()
 
-        print(id_note)
-        print(note)
-
-        
-
         if note is None or id_note != note.id:
             return jsonify({
                 'status': 'Error',
@@ -161,5 +156,45 @@ def delete_note():
             }), 500
 
 
+@app.put('/api/edit_note')
+def edit_note():
+    try:
+        body = request.get_json()
+        id_note = body['id']
+        title_edit = body['title']
+        content_edit = body['content']
+        note = Note.query.filter_by(id=id_note).first()
 
+        print(title_edit)
 
+        if note is None or id_note != note.id:
+            return jsonify({
+                'status': 'Error',
+                'message': 'Anotação não encontrado!'
+            }), 400
+        
+        note.content = content_edit
+        note.title = title_edit
+
+        print(title_edit)
+
+        db.session.add(note)
+        db.session.commit()
+        db.session.close()
+
+        return jsonify({
+            'status': 'ok',
+            'message': 'Nota editada com sucesso'
+        }), 200
+
+    except Exception as error:
+        print(f'error class: {error.__class__} | error cause: {error.__cause__}')
+        exc_type, exc_obj, exc_tb = sys.exc_info()
+        fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
+        print(exc_type, fname, exc_tb.tb_lineno)
+        return jsonify({
+                'status': 'error',
+                'message': 'An error has occurred!',
+                'error_class': str(error.__class__),
+                'error_cause': str(error.__cause__)
+            }), 500
