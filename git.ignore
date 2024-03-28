@@ -1,0 +1,19 @@
+# Ignorar o ambiente virtual do Python
+venv/
+
+# Byte-compiled / Arquivos de cache Python
+*.pyc
+__pycache__/
+
+# Arquivos de configuração
+*.bak
+*.swp
+*.py[co]
+
+# Arquivos de registro e saída
+*.log
+*.csv
+
+# Outros arquivos e diretórios
+.env
+.DS_Store
