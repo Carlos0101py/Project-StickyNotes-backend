@@ -128,7 +128,12 @@ def delete_note():
         id_note = body['id']
         note = Note.query.filter_by(id=id_note).first()
 
-        if id_note != note.id:
+        print(id_note)
+        print(note)
+
+        
+
+        if note is None or id_note != note.id:
             return jsonify({
                 'status': 'Error',
                 'message': 'Anotação não encontrado!'
@@ -141,7 +146,7 @@ def delete_note():
         return jsonify({
             'status': 'ok',
             'message': 'Nota deletada com sucesso'
-        }), 201
+        }), 200
 
     except Exception as error:
         print(f'error class: {error.__class__} | error cause: {error.__cause__}')
