@@ -107,22 +107,17 @@ def login():
         password = body['password']
 
         user = User.query.filter_by(username=name).first()
-
-        if user is None:
-            return jsonify({
-                'status': 'Error',
-                'massage': 'Usuário não cadastrado!'
-            }), 400
         
-        if check_password_hash(pwhash=user.password_hash, password=password) == False:
+        if user is None or check_password_hash(pwhash=user.password_hash, password=password) == False:
             return jsonify({
                 'status': 'Error',
-                'massage': 'Senha incorreta!'
+                'message': 'Senha ou Usuario incorreto!'
             }), 400
         
         if(name == user.username and check_password_hash(pwhash=user.password_hash, password=password) == True):
             return jsonify({
                 'status': 'ok',
+                'id': user.id,
                 'message': 'Login feito com sucesso!'
             }), 200
 
