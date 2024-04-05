@@ -22,7 +22,7 @@ def add_user():
         if password != re_password:
             return jsonify({
                 'status': 'Error',
-                'message': 'Senhas não coencidem'
+                'message': 'Senhas inseridas não coencidem'
             }), 400
         
         password_hash = generate_password_hash(password)
@@ -53,7 +53,7 @@ def add_user():
         if 'UNIQUE constraint failed: user.email' in str(error.__cause__):
             return jsonify({
                 'status': 'error',
-                'message': 'Email em uso'
+                'message': 'Email inválido!'
             }), 400
 
         return jsonify({
@@ -83,7 +83,7 @@ def delete_user():
 
         return jsonify({
             'stutus': 'ok',
-            'message': 'Usuario cadastrado com sucesso'
+            'message': 'Usuario deletado com sucesso!'
         }), 200
     
     except Exception as error:
@@ -111,7 +111,7 @@ def login():
         if user is None or check_password_hash(pwhash=user.password_hash, password=password) == False:
             return jsonify({
                 'status': 'Error',
-                'message': 'Senha ou Usuario incorreto!'
+                'message': 'Senha ou Usuário incorreto!'
             }), 400
         
         if(name == user.username and check_password_hash(pwhash=user.password_hash, password=password) == True):
@@ -182,7 +182,7 @@ def delete_note():
         if note is None or id_note != note.id:
             return jsonify({
                 'status': 'Error',
-                'message': 'Anotação não encontrado!'
+                'message': 'Nota não encontrado!'
             }), 400
         
         db.session.delete(note)
@@ -221,7 +221,7 @@ def edit_note():
         if note is None or id_note != note.id:
             return jsonify({
                 'status': 'Error',
-                'message': 'Anotação não encontrado!'
+                'message': 'Nota não encontrado!'
             }), 400
         
         note.content = content_edit
