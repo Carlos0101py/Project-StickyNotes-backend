@@ -83,7 +83,7 @@ def delete_user():
 
         return jsonify({
             'stutus': 'ok',
-            'message': 'Usuario deletado com sucesso!'
+            'message': 'Usuário deletado com sucesso!'
         }), 200
     
     except Exception as error:
@@ -182,7 +182,7 @@ def delete_note():
         if note is None or id_note != note.id:
             return jsonify({
                 'status': 'Error',
-                'message': 'Nota não encontrado!'
+                'message': 'Nota não encontrada!'
             }), 400
         
         db.session.delete(note)
@@ -221,7 +221,7 @@ def edit_note():
         if note is None or id_note != note.id:
             return jsonify({
                 'status': 'Error',
-                'message': 'Nota não encontrado!'
+                'message': 'Nota não encontrada!'
             }), 400
         
         note.content = content_edit
